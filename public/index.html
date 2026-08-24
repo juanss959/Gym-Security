@@ -14,10 +14,7 @@
       <div class="logo">🏋️ GymSec</div>
       <p class="subtitulo">Sistema de Gestión de Gimnasio</p>
 
-      <div class="tabs">
-        <button id="tab-login" class="tab activo" data-tab="login">Iniciar sesión</button>
-        <button id="tab-registro" class="tab" data-tab="registro">Registrarse</button>
-      </div>
+      <p class="subtitulo-login">Acceso exclusivo para el personal</p>
 
       <!-- Login -->
       <form id="form-login" class="form">
@@ -28,20 +25,6 @@
           <input type="password" name="password" autocomplete="current-password" required />
         </label>
         <button type="submit" class="btn btn-primario">Entrar</button>
-      </form>
-
-      <!-- Registro -->
-      <form id="form-registro" class="form oculto">
-        <label>Nombre
-          <input type="text" name="nombre" required />
-        </label>
-        <label>Email
-          <input type="email" name="email" required />
-        </label>
-        <label>Contraseña (mín. 8)
-          <input type="password" name="password" minlength="8" required />
-        </label>
-        <button type="submit" class="btn btn-primario">Crear cuenta</button>
       </form>
 
       <p id="login-msg" class="msg"></p>

@@ -30,19 +30,6 @@ function mostrarMsg(el, texto, tipo) {
 }
 
 // ----------------------- Autenticación -----------------------
-function initTabs() {
-  document.querySelectorAll('.tab').forEach((t) => {
-    t.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach((x) => x.classList.remove('activo'));
-      t.classList.add('activo');
-      const esLogin = t.dataset.tab === 'login';
-      $('#form-login').classList.toggle('oculto', !esLogin);
-      $('#form-registro').classList.toggle('oculto', esLogin);
-      mostrarMsg($('#login-msg'), '', '');
-    });
-  });
-}
-
 $('#form-login').addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = e.target;
@@ -53,22 +40,6 @@ $('#form-login').addEventListener('submit', async (e) => {
     });
     usuarioActual = data.usuario;
     entrarApp();
-  } catch (err) {
-    mostrarMsg($('#login-msg'), err.message, 'error');
-  }
-});
-
-$('#form-registro').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const f = e.target;
-  try {
-    await api('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({ nombre: f.nombre.value, email: f.email.value, password: f.password.value }),
-    });
-    mostrarMsg($('#login-msg'), 'Cuenta creada. Ahora inicia sesión.', 'ok');
-    document.querySelector('[data-tab="login"]').click();
-    f.reset();
   } catch (err) {
     mostrarMsg($('#login-msg'), err.message, 'error');
   }
@@ -227,7 +198,6 @@ formMiembro.addEventListener('submit', async (e) => {
 
 // ----------------------- Arranque: ¿sesión activa? -----------------------
 async function init() {
-  initTabs();
   try {
     const data = await api('/auth/me');
     usuarioActual = data.usuario;

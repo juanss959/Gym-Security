@@ -29,39 +29,10 @@ function emailValido(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 150;
 }
 
-// -------------------- REGISTRO --------------------
-// (Para la demo permite registrar recepcionistas. El rol 'admin' se controla.)
-router.post('/register', async (req, res) => {
-  try {
-    const { nombre, email, password } = req.body || {};
-    if (!nombre || nombre.trim().length < 2) {
-      return res.status(400).json({ error: 'El nombre es obligatorio.' });
-    }
-    if (!emailValido(email)) {
-      return res.status(400).json({ error: 'Email inválido.' });
-    }
-    if (!password || password.length < 8) {
-      return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
-    }
-
-    const hash = await bcrypt.hash(password, 12);
-    const { rows } = await db.query(
-      `INSERT INTO usuarios (nombre, email, password_hash, rol)
-       VALUES ($1, $2, $3, 'recepcionista')
-       RETURNING id, nombre, email, rol`,
-      [nombre.trim(), email.toLowerCase(), hash]
-    );
-
-    await audit.registrar({ usuarioId: rows[0].id, accion: 'REGISTER', entidad: 'usuarios', entidadId: rows[0].id, ip: req.ip });
-    return res.status(201).json({ mensaje: 'Usuario creado.', usuario: rows[0] });
-  } catch (err) {
-    if (err.code === '23505') {
-      return res.status(409).json({ error: 'Ese email ya está registrado.' });
-    }
-    console.error('[register]', err.message);
-    return res.status(500).json({ error: 'Error al registrar.' });
-  }
-});
+// NOTA DE SEGURIDAD: No existe registro publico de usuarios. El sistema es de
+// uso interno y solo el administrador (o el DBA) crea cuentas del personal
+// directamente en la base de datos. Esto reduce la superficie de ataque:
+// nadie externo puede crearse una cuenta para acceder al sistema.
 
 // -------------------- LOGIN --------------------
 router.post('/login', loginLimiter, async (req, res) => {

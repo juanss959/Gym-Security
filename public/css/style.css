@@ -43,6 +43,7 @@ body {
 .auth-card { width: 100%; max-width: 380px; text-align: center; }
 .logo { font-size: 28px; font-weight: 800; color: var(--azul); }
 .subtitulo { color: var(--texto-suave); margin-top: 4px; }
+.subtitulo-login { color: var(--texto-suave); font-size: 13px; margin: 18px 0 20px; }
 
 .tabs { display: flex; margin: 20px 0; border-bottom: 1px solid var(--gris-borde); }
 .tab {

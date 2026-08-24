@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GymSec — Gestión de Gimnasio</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ===================== PANTALLA DE LOGIN ===================== -->
+  <section id="pantalla-login" class="centro">
+    <div class="card auth-card">
+      <div class="logo">🏋️ GymSec</div>
+      <p class="subtitulo">Sistema de Gestión de Gimnasio</p>
+
+      <div class="tabs">
+        <button id="tab-login" class="tab activo" data-tab="login">Iniciar sesión</button>
+        <button id="tab-registro" class="tab" data-tab="registro">Registrarse</button>
+      </div>
+
+      <!-- Login -->
+      <form id="form-login" class="form">
+        <label>Email
+          <input type="email" name="email" autocomplete="username" required />
+        </label>
+        <label>Contraseña
+          <input type="password" name="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit" class="btn btn-primario">Entrar</button>
+      </form>
+
+      <!-- Registro -->
+      <form id="form-registro" class="form oculto">
+        <label>Nombre
+          <input type="text" name="nombre" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" required />
+        </label>
+        <label>Contraseña (mín. 8)
+          <input type="password" name="password" minlength="8" required />
+        </label>
+        <button type="submit" class="btn btn-primario">Crear cuenta</button>
+      </form>
+
+      <p id="login-msg" class="msg"></p>
+      <p class="hint">Demo: <b>admin@gym.com</b> / <b>Admin1234</b></p>
+    </div>
+  </section>
+
+  <!-- ===================== PANEL PRINCIPAL ===================== -->
+  <section id="pantalla-app" class="oculto">
+    <header class="barra">
+      <div class="logo-pequeno">🏋️ GymSec</div>
+      <div class="usuario-info">
+        <span id="usuario-nombre"></span>
+        <span id="usuario-rol" class="badge"></span>
+        <button id="btn-logout" class="btn btn-secundario">Salir</button>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <div class="acciones">
+        <h1>Miembros del gimnasio</h1>
+        <button id="btn-nuevo" class="btn btn-primario">+ Nuevo miembro</button>
+      </div>
+
+      <div class="filtros">
+        <input id="busqueda" type="search" placeholder="Buscar por nombre, apellido o cédula..." />
+        <select id="filtro-activo">
+          <option value="">Todos</option>
+          <option value="true">Solo activos</option>
+          <option value="false">Solo inactivos</option>
+        </select>
+      </div>
+
+      <div class="tabla-wrap">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cédula</th>
+              <th>Teléfono</th>
+              <th>Membresía</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+              <th>Estado</th>
+              <th class="col-acciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body">
+            <tr><td colspan="8" class="vacio">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p id="app-msg" class="msg"></p>
+    </main>
+  </section>
+
+  <!-- ===================== MODAL CREAR/EDITAR ===================== -->
+  <div id="modal" class="modal oculto">
+    <div class="modal-card">
+      <h2 id="modal-titulo">Nuevo miembro</h2>
+      <form id="form-miembro" class="form grid2">
+        <input type="hidden" name="id" />
+        <label>Nombre<input type="text" name="nombre" required /></label>
+        <label>Apellido<input type="text" name="apellido" required /></label>
+        <label>Cédula<input type="text" name="cedula" required /></label>
+        <label>Teléfono<input type="text" name="telefono" /></label>
+        <label>Email<input type="email" name="email" /></label>
+        <label>Fecha de nacimiento<input type="date" name="fecha_nacimiento" /></label>
+        <label>Tipo de membresía
+          <select name="tipo_membresia">
+            <option value="diaria">Diaria</option>
+            <option value="mensual" selected>Mensual</option>
+            <option value="trimestral">Trimestral</option>
+            <option value="anual">Anual</option>
+          </select>
+        </label>
+        <label>Fecha inicio<input type="date" name="fecha_inicio" /></label>
+        <label>Fecha fin<input type="date" name="fecha_fin" /></label>
+        <label class="check">Activo
+          <input type="checkbox" name="activo" checked />
+        </label>
+        <p id="modal-msg" class="msg span2"></p>
+        <div class="modal-acciones span2">
+          <button type="button" id="btn-cancelar" class="btn btn-secundario">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
